@@ -1,18 +1,17 @@
 ﻿  auxiliary_functions.cpp
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(10): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(11): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
   draw_map.cpp
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(175): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(185): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(210): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   main.cpp
 e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(38): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(111): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(112): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(124): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(134): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(125): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(135): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(136): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   menu.cpp
   Generating Code...
   prm_algorithm.vcxproj -> E:\MyFolder\C course\PRM_Algorithm\prm_algorithm\Debug\prm_algorithm.exe

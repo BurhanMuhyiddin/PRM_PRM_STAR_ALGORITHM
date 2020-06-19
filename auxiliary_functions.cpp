@@ -2,8 +2,9 @@
 #include "auxiliary_functions.h"
 #include "window_parameters.h"
 #include "prm.h"
+#include "draw_map.h"
 
-extern int map[Y_MAX][X_MAX];
+extern struct sNode *nodes;
 
 float mapValue(float val, float fromMin, float fromMax, float toMin, float toMax)
 {
@@ -19,8 +20,12 @@ void generateRandomNodes()
 		int nodeX = rand() % (X_MAX - 1);
 		int nodeY = rand() % (Y_MAX - 1);
 
-		if (map[nodeY][nodeX] == 0)
-			map[nodeY][nodeX] = 2; // 2 indicates position of nodes
+		if (
+			nodes[nodeX*X_MAX + nodeY].bObstacle == false &&
+			nodes[nodeX*X_MAX + nodeY].bStart == false &&
+			nodes[nodeX*X_MAX + nodeY].bGoal == false
+			)
+			nodes[nodeX*X_MAX + nodeY].bSampleNode = true;
 
 		counter++;
 	}

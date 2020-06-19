@@ -7,16 +7,36 @@
 
 using namespace std;
 
-int map[Y_MAX][X_MAX] = { 0 };
+sNode *nodes = nullptr;
 
 extern bool isDrawMap;
 
+void initMap()
+{
+	nodes = new sNode[X_MAX * Y_MAX];
+
+	for (int x = 0; x < X_MAX; x++)
+	{
+		for (int y = 0; y < Y_MAX; y++)
+		{
+			nodes[x*X_MAX + y].x = x;
+			nodes[x*X_MAX + y].y = y;
+			nodes[x*X_MAX + y].bObstacle = false;
+			nodes[x*X_MAX + y].bStart = false;
+			nodes[x*X_MAX + y].bGoal = false;
+			nodes[x*X_MAX + y].bVisited = false;
+			nodes[x*X_MAX + y].bSampleNode = false;
+			nodes[x*X_MAX + y].parent = nullptr;
+		}
+	}
+}
+
 void emptyMap()
 {
-	for (int i = 0; i < X_MAX; i++)
+	for (int x = 0; x < X_MAX; x++)
 	{
-		for (int j = 0; j < Y_MAX; j++)
-			map[j][i] = 0;
+		for (int y = 0; y < Y_MAX; y++)
+			nodes[x * X_MAX + y].bObstacle = false;
 	}
 }
 
@@ -25,24 +45,24 @@ void loadMapNone()
 	emptyMap();
 
 	// TOP
-	for (int i = 0; i < X_MAX; i++)
+	for (int x = 0; x < X_MAX; x++)
 	{
-		map[0][i] = 1;
+		nodes[x * X_MAX].bObstacle = true;
 	}
 	// BOTTOM
-	for (int i = 0; i < X_MAX; i++)
+	for (int x = 0; x < X_MAX; x++)
 	{
-		map[Y_MAX - 1][i] = 1;
+		nodes[x*X_MAX + Y_MAX - 1].bObstacle = true;
 	}
 	// LEFT
-	for (int i = 0; i < Y_MAX; i++)
+	for (int y = 0; y < Y_MAX; y++)
 	{
-		map[i][0] = 1;
+		nodes[y].bObstacle = true;
 	}
 	// RIGHT
-	for (int i = 0; i < Y_MAX; i++)
+	for (int y = 0; y < Y_MAX; y++)
 	{
-		map[i][X_MAX - 1] = 1;
+		nodes[(X_MAX - 1)*X_MAX + y].bObstacle = true;
 	}
 
 	isDrawMap = true;
@@ -56,38 +76,38 @@ void loadMapSparse()
 	int temp = (X_MAX - 2 * BARRIER_THICKNESS - 3 * MARGIN) / 2;
 
 	// Left Top Square
-	for (int i = BARRIER_THICKNESS + MARGIN; i < BARRIER_THICKNESS + MARGIN + temp; i++)
+	for (int x = BARRIER_THICKNESS + MARGIN; x < BARRIER_THICKNESS + MARGIN + temp; x++)
 	{
-		for (int j = BARRIER_THICKNESS + MARGIN; j < BARRIER_THICKNESS + MARGIN + temp; j++)
+		for (int y = BARRIER_THICKNESS + MARGIN; y < BARRIER_THICKNESS + MARGIN + temp; y++)
 		{
-			map[j][i] = 1;
+			nodes[x * X_MAX + y].bObstacle = true;
 		}
 	}
 
 	// Left Bottom Square
-	for (int i = BARRIER_THICKNESS + MARGIN; i < BARRIER_THICKNESS + MARGIN + temp; i++)
+	for (int x = BARRIER_THICKNESS + MARGIN; x < BARRIER_THICKNESS + MARGIN + temp; x++)
 	{
-		for (int j = BARRIER_THICKNESS + 2 * MARGIN + temp; j < Y_MAX - BARRIER_THICKNESS - MARGIN; j++)
+		for (int y = BARRIER_THICKNESS + 2 * MARGIN + temp; y < Y_MAX - BARRIER_THICKNESS - MARGIN; y++)
 		{
-			map[j][i] = 1;
+			nodes[x * X_MAX + y].bObstacle = true;
 		}
 	}
 
 	// Right Top Square
-	for (int i = BARRIER_THICKNESS + 2 * MARGIN + temp; i < X_MAX - BARRIER_THICKNESS - MARGIN; i++)
+	for (int x = BARRIER_THICKNESS + 2 * MARGIN + temp; x < X_MAX - BARRIER_THICKNESS - MARGIN; x++)
 	{
-		for (int j = BARRIER_THICKNESS + MARGIN; j < BARRIER_THICKNESS + MARGIN + temp; j++)
+		for (int y = BARRIER_THICKNESS + MARGIN; y < BARRIER_THICKNESS + MARGIN + temp; y++)
 		{
-			map[j][i] = 1;
+			nodes[x * X_MAX + y].bObstacle = true;
 		}
 	}
 
 	// Right Bottom Square
-	for (int i = BARRIER_THICKNESS + 2 * MARGIN + temp; i < X_MAX - BARRIER_THICKNESS - MARGIN; i++)
+	for (int x = BARRIER_THICKNESS + 2 * MARGIN + temp; x < X_MAX - BARRIER_THICKNESS - MARGIN; x++)
 	{
-		for (int j = BARRIER_THICKNESS + 2 * MARGIN + temp; j < Y_MAX - BARRIER_THICKNESS - MARGIN; j++)
+		for (int y = BARRIER_THICKNESS + 2 * MARGIN + temp; y < Y_MAX - BARRIER_THICKNESS - MARGIN; y++)
 		{
-			map[j][i] = 1;
+			nodes[x * X_MAX + y].bObstacle = true;
 		}
 	}
 
@@ -101,25 +121,27 @@ void loadNarrowPassage()
 	loadMapNone();
 
 	// First column of passage
-	for (int i = BARRIER_THICKNESS - 1; i < BARRIER_THICKNESS + 37; i++)
+	int x = BARRIER_THICKNESS + PASSAGE_MARGIN;
+	for (int y = BARRIER_THICKNESS - 1; y < BARRIER_THICKNESS + 37; y++)
 	{
-		map[i][BARRIER_THICKNESS + PASSAGE_MARGIN] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
-	for (int i = BARRIER_THICKNESS + 37 + NARROW_GATE; i <= Y_MAX - BARRIER_THICKNESS; i++)
+	for (int y = BARRIER_THICKNESS + 37 + NARROW_GATE; y <= Y_MAX - BARRIER_THICKNESS; y++)
 	{
-		map[i][BARRIER_THICKNESS + PASSAGE_MARGIN] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
 	//Second column of passage
-	for (int i = BARRIER_THICKNESS - 1; i < BARRIER_THICKNESS + 15; i++)
+	x = X_MAX - BARRIER_THICKNESS - PASSAGE_MARGIN;
+	for (int y = BARRIER_THICKNESS - 1; y < BARRIER_THICKNESS + 15; y++)
 	{
-		map[i][X_MAX - BARRIER_THICKNESS - PASSAGE_MARGIN] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
-	for (int i = BARRIER_THICKNESS + 15 + LARGE_GATE; i <= Y_MAX - BARRIER_THICKNESS; i++)
+	for (int y = BARRIER_THICKNESS + 15 + LARGE_GATE; y <= Y_MAX - BARRIER_THICKNESS; y++)
 	{
-		map[i][X_MAX - BARRIER_THICKNESS - PASSAGE_MARGIN] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
 	isDrawMap = true;
@@ -130,19 +152,22 @@ void loadConcave()
 	emptyMap();
 	loadMapNone();
 
-	for (int i = BARRIER_THICKNESS + CONCAVE_MARGIN; i < X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN; i++)
+	int y = BARRIER_THICKNESS + CONCAVE_MARGIN;
+	for (int x = BARRIER_THICKNESS + CONCAVE_MARGIN; x < X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN; x++)
 	{
-		map[BARRIER_THICKNESS + CONCAVE_MARGIN][i] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
-	for (int i = BARRIER_THICKNESS + CONCAVE_MARGIN; i < X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN; i++)
+	y = BARRIER_THICKNESS + CONCAVE_MARGIN + 12;
+	for (int x = BARRIER_THICKNESS + CONCAVE_MARGIN; x < X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN; x++)
 	{
-		map[BARRIER_THICKNESS + CONCAVE_MARGIN + 12][i] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
-	for (int i = BARRIER_THICKNESS + CONCAVE_MARGIN; i < Y_MAX - 1 - 2 * BARRIER_THICKNESS - CONCAVE_MARGIN; i++)
+	int x = X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN;
+	for (y = BARRIER_THICKNESS + CONCAVE_MARGIN; y < Y_MAX - 1 - 2 * BARRIER_THICKNESS - CONCAVE_MARGIN; y++)
 	{
-		map[i][X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN] = 1;
+		nodes[x*X_MAX + y].bObstacle = true;
 	}
 
 	isDrawMap = true;
@@ -150,31 +175,31 @@ void loadConcave()
 
 void drawMap()
 {
-	for (int i = 0; i < Y_MAX; i++)
+	for (int y = 0; y < Y_MAX; y++)
 	{
-		for (int j = 0; j < X_MAX; j++)
+		for (int x = 0; x < X_MAX; x++)
 		{
-			if (map[i][j] == 1) // Obstacles
+			if (nodes[x * X_MAX + y].bObstacle == true) // Obstacles
 
 			{
 				glColor3f(1.0, 0.0, 0.0);
-				glRectd(j, i, j + 1, i + 1);
+				glRectd(x, y, x + 1, y + 1);
 			}
-			else if (map[i][j] == 5) // Start position
+			else if (nodes[x * X_MAX + y].bStart == true) // Start position
 			{
 				glColor3f(1.0, 1.0, 0.0);
-				glRectd(j, i, j + 1, i + 1);
+				glRectd(x, y, x + 1, y + 1);
 			}
-			else if (map[i][j] == 6) // Goal position
+			else if (nodes[x * X_MAX + y].bGoal == true) // Goal position
 			{
 				glColor3f(0.0, 1.0, 0.0);
-				glRectd(j, i, j + 1, i + 1);
+				glRectd(x, y, x + 1, y + 1);
 			}
-			else if (map[i][j] == 7)
+			/*else if (map[i][j] == 7)
 			{
 				glColor3f(0.0, 0.9, 0.3);
 				glRectd(j, i, j + 1, i + 1);
-			}
+			}*/
 		}
 	}
 }
@@ -184,15 +209,15 @@ void visualizeNodes()
 	glPointSize(3);
 	glColor3f(0.5, 0.75, 0.12);
 
-	for (int i = 0; i < X_MAX; i++)
+	for (int x = 0; x < X_MAX; x++)
 	{
-		for (int j = 0; j < Y_MAX; j++)
+		for (int y = 0; y < Y_MAX; y++)
 		{
-			if (map[j][i] == 2)
+			if (nodes[x * X_MAX + y].bSampleNode == true)
 			{
 				glBegin(GL_POINTS);
 
-				glVertex2i(i, j);
+				glVertex2i(x, y);
 
 				glEnd();
 			}

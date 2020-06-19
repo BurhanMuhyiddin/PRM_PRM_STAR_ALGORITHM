@@ -30,13 +30,14 @@ bool is_prm_star = false;
 bool is_start_to_solve_prm = false;
 bool is_start_to_solve_prm_star = false;
 
-extern int map[Y_MAX][X_MAX];
+extern struct sNode *nodes;
 
 void init()
 {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	srand(time(0));
 	initMenu();
+	initMap();
 }
 
 int main(int argc, char** argv)
@@ -99,19 +100,19 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 				startX = mapValue(mouseX, 0, W_W, 0, X_MAX);
 				startY = mapValue(mouseY, 0, W_H, 0, Y_MAX);
 				
-				if(map[(int)startY][(int)startX] != 1)
-					map[(int)startY][(int)startX] = 5;
+				if(nodes[(int)startX*X_MAX+(int)startY].bObstacle == false)
+					nodes[(int)startX*X_MAX + (int)startY].bStart = true;
 			}
 			else
 			{
-				if (map[(int)startY][(int)startX] != 1)
-					map[(int)startY][(int)startX] = 0;
+				//if (nodes[(int)startX*X_MAX + (int)startY].bObstacle == false)
+					nodes[(int)startX*X_MAX + (int)startY].bStart = false;
 
 				startX = mapValue(mouseX, 0, W_W, 0, X_MAX);
 				startY = mapValue(mouseY, 0, W_H, 0, Y_MAX);
 
-				if (map[(int)startY][(int)startX] != 1)
-					map[(int)startY][(int)startX] = 5;
+				if (nodes[(int)startX*X_MAX + (int)startY].bObstacle == false)
+					nodes[(int)startX*X_MAX + (int)startY].bStart = true;
 			}
 		}
 		else if (is_set_goal)
@@ -123,19 +124,19 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 				goalX = mapValue(mouseX, 0, W_W, 0, X_MAX);
 				goalY = mapValue(mouseY, 0, W_H, 0, Y_MAX);
 
-				if (map[(int)goalY][(int)goalX] != 1)
-					map[(int)goalY][(int)goalX] = 6;
+				if (nodes[(int)goalX*X_MAX + (int)goalY].bObstacle == false)
+					nodes[(int)goalX*X_MAX + (int)goalY].bGoal = true;
 			}
 			else
 			{
-				if (map[(int)goalY][(int)goalX] != 1)
-					map[(int)goalY][(int)goalX] = 0;
+				//if (map[(int)goalY][(int)goalX] != 1)
+				nodes[(int)goalX*X_MAX + (int)goalY].bGoal = false;
 
 				goalX = mapValue(mouseX, 0, W_W, 0, X_MAX);
 				goalY = mapValue(mouseY, 0, W_H, 0, Y_MAX);
 
-				if (map[(int)goalY][(int)goalX] != 1)
-					map[(int)goalY][(int)goalX] = 6;
+				if (nodes[(int)goalX*X_MAX + (int)goalY].bObstacle == false)
+					nodes[(int)goalX*X_MAX + (int)goalY].bGoal = true;
 			}
 		}
 	}
