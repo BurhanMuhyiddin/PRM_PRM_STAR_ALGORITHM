@@ -29,6 +29,7 @@ bool is_prm = false;
 bool is_prm_star = false;
 bool is_start_to_solve_prm = false;
 bool is_start_to_solve_prm_star = false;
+bool is_constructed = false;
 
 extern struct sNode *nodes;
 
@@ -68,11 +69,14 @@ void display_callback()
 	if (isDrawMap)
 	{
 		drawMap();
-
-		if (is_start_to_solve_prm)
+		if (!is_constructed && is_start_to_solve_prm)
 		{
-			visualizeNodes();
+			constructPrm();
+			is_constructed = true;
 		}
+		visualizeNodes();
+		if(is_constructed)
+			visualizeConnections();
 	}
 
 	glutSwapBuffers();

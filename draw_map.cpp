@@ -2,7 +2,9 @@
 #include <gl/glut.h>
 #include <gl/GLU.h>
 #include <gl/GL.h>
+#include <algorithm>
 #include "window_parameters.h"
+#include "auxiliary_functions.h"
 #include <iostream>
 
 using namespace std;
@@ -19,14 +21,15 @@ void initMap()
 	{
 		for (int y = 0; y < Y_MAX; y++)
 		{
-			nodes[x*X_MAX + y].x = x;
-			nodes[x*X_MAX + y].y = y;
-			nodes[x*X_MAX + y].bObstacle = false;
-			nodes[x*X_MAX + y].bStart = false;
-			nodes[x*X_MAX + y].bGoal = false;
-			nodes[x*X_MAX + y].bVisited = false;
-			nodes[x*X_MAX + y].bSampleNode = false;
-			nodes[x*X_MAX + y].parent = nullptr;
+			nodes[x*Y_MAX + y].x = x;
+			nodes[x*Y_MAX + y].y = y;
+			nodes[x*Y_MAX + y].bObstacle = false;
+			nodes[x*Y_MAX + y].bStart = false;
+			nodes[x*Y_MAX + y].bGoal = false;
+			nodes[x*Y_MAX + y].bVisited = false;
+			nodes[x*Y_MAX + y].bSampleNode = false;
+			nodes[x*Y_MAX + y].bConnected = false;
+			nodes[x*Y_MAX + y].parent = nullptr;
 		}
 	}
 }
@@ -36,7 +39,7 @@ void emptyMap()
 	for (int x = 0; x < X_MAX; x++)
 	{
 		for (int y = 0; y < Y_MAX; y++)
-			nodes[x * X_MAX + y].bObstacle = false;
+			nodes[x * Y_MAX + y].bObstacle = false;
 	}
 }
 
@@ -47,12 +50,12 @@ void loadMapNone()
 	// TOP
 	for (int x = 0; x < X_MAX; x++)
 	{
-		nodes[x * X_MAX].bObstacle = true;
+		nodes[x * Y_MAX].bObstacle = true;
 	}
 	// BOTTOM
 	for (int x = 0; x < X_MAX; x++)
 	{
-		nodes[x*X_MAX + Y_MAX - 1].bObstacle = true;
+		nodes[x*Y_MAX + Y_MAX - 1].bObstacle = true;
 	}
 	// LEFT
 	for (int y = 0; y < Y_MAX; y++)
@@ -62,7 +65,7 @@ void loadMapNone()
 	// RIGHT
 	for (int y = 0; y < Y_MAX; y++)
 	{
-		nodes[(X_MAX - 1)*X_MAX + y].bObstacle = true;
+		nodes[(X_MAX - 1)*Y_MAX + y].bObstacle = true;
 	}
 
 	isDrawMap = true;
@@ -80,7 +83,7 @@ void loadMapSparse()
 	{
 		for (int y = BARRIER_THICKNESS + MARGIN; y < BARRIER_THICKNESS + MARGIN + temp; y++)
 		{
-			nodes[x * X_MAX + y].bObstacle = true;
+			nodes[x * Y_MAX + y].bObstacle = true;
 		}
 	}
 
@@ -89,7 +92,7 @@ void loadMapSparse()
 	{
 		for (int y = BARRIER_THICKNESS + 2 * MARGIN + temp; y < Y_MAX - BARRIER_THICKNESS - MARGIN; y++)
 		{
-			nodes[x * X_MAX + y].bObstacle = true;
+			nodes[x * Y_MAX + y].bObstacle = true;
 		}
 	}
 
@@ -98,7 +101,7 @@ void loadMapSparse()
 	{
 		for (int y = BARRIER_THICKNESS + MARGIN; y < BARRIER_THICKNESS + MARGIN + temp; y++)
 		{
-			nodes[x * X_MAX + y].bObstacle = true;
+			nodes[x * Y_MAX + y].bObstacle = true;
 		}
 	}
 
@@ -107,7 +110,7 @@ void loadMapSparse()
 	{
 		for (int y = BARRIER_THICKNESS + 2 * MARGIN + temp; y < Y_MAX - BARRIER_THICKNESS - MARGIN; y++)
 		{
-			nodes[x * X_MAX + y].bObstacle = true;
+			nodes[x * Y_MAX + y].bObstacle = true;
 		}
 	}
 
@@ -124,24 +127,24 @@ void loadNarrowPassage()
 	int x = BARRIER_THICKNESS + PASSAGE_MARGIN;
 	for (int y = BARRIER_THICKNESS - 1; y < BARRIER_THICKNESS + 37; y++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	for (int y = BARRIER_THICKNESS + 37 + NARROW_GATE; y <= Y_MAX - BARRIER_THICKNESS; y++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	//Second column of passage
 	x = X_MAX - BARRIER_THICKNESS - PASSAGE_MARGIN;
 	for (int y = BARRIER_THICKNESS - 1; y < BARRIER_THICKNESS + 15; y++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	for (int y = BARRIER_THICKNESS + 15 + LARGE_GATE; y <= Y_MAX - BARRIER_THICKNESS; y++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	isDrawMap = true;
@@ -155,19 +158,19 @@ void loadConcave()
 	int y = BARRIER_THICKNESS + CONCAVE_MARGIN;
 	for (int x = BARRIER_THICKNESS + CONCAVE_MARGIN; x < X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN; x++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	y = BARRIER_THICKNESS + CONCAVE_MARGIN + 12;
 	for (int x = BARRIER_THICKNESS + CONCAVE_MARGIN; x < X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN; x++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	int x = X_MAX - BARRIER_THICKNESS - CONCAVE_MARGIN;
 	for (y = BARRIER_THICKNESS + CONCAVE_MARGIN; y < Y_MAX - 1 - 2 * BARRIER_THICKNESS - CONCAVE_MARGIN; y++)
 	{
-		nodes[x*X_MAX + y].bObstacle = true;
+		nodes[x*Y_MAX + y].bObstacle = true;
 	}
 
 	isDrawMap = true;
@@ -179,18 +182,18 @@ void drawMap()
 	{
 		for (int x = 0; x < X_MAX; x++)
 		{
-			if (nodes[x * X_MAX + y].bObstacle == true) // Obstacles
+			if (nodes[x * Y_MAX + y].bObstacle == true) // Obstacles
 
 			{
 				glColor3f(1.0, 0.0, 0.0);
 				glRectd(x, y, x + 1, y + 1);
 			}
-			else if (nodes[x * X_MAX + y].bStart == true) // Start position
+			else if (nodes[x * Y_MAX + y].bStart == true) // Start position
 			{
 				glColor3f(1.0, 1.0, 0.0);
 				glRectd(x, y, x + 1, y + 1);
 			}
-			else if (nodes[x * X_MAX + y].bGoal == true) // Goal position
+			else if (nodes[x * Y_MAX + y].bGoal == true) // Goal position
 			{
 				glColor3f(0.0, 1.0, 0.0);
 				glRectd(x, y, x + 1, y + 1);
@@ -213,13 +216,55 @@ void visualizeNodes()
 	{
 		for (int y = 0; y < Y_MAX; y++)
 		{
-			if (nodes[x * X_MAX + y].bSampleNode == true)
+			if (nodes[x * Y_MAX + y].bSampleNode == true)
 			{
 				glBegin(GL_POINTS);
 
 				glVertex2i(x, y);
 
 				glEnd();
+			}
+		}
+	}
+}
+
+void visualizeConnections()
+{
+	/*for (int xx = 0; xx < X_MAX; xx++)
+	{
+		for (int yy = 0; yy < Y_MAX; yy++)
+		{
+			if (nodes[xx*Y_MAX + yy].bSampleNode)
+			{
+				cout << nodes[xx*Y_MAX + yy].vecConnected.size() << endl;
+			}
+		}
+	}*/
+	glColor3f(1.0, 0.5, 0.7);
+	for (int x = 0; x < X_MAX; x++)
+	{
+		for (int y = 0; y < Y_MAX; y++)
+		{
+			if (nodes[x*Y_MAX + y].bSampleNode)
+			{
+				int tmpSize = nodes[x*Y_MAX + y].vecConnected.size();
+				int x1 = nodes[x*Y_MAX + y].x;
+				int y1 = nodes[x*Y_MAX + y].y;
+				for (int c = 0; c < tmpSize; c++)
+				{
+					int *tmp = getCoordinatesOfNode(nodes[x*Y_MAX + y].vecConnected[c]);
+					int x2 = tmp[0];
+					int y2 = tmp[1];
+					glBegin(GL_LINES);
+						glVertex2i(x1, y1);
+						glVertex2i(x2, y2);
+					glEnd();
+					//vec.erase(std::remove(vec.begin(), vec.end(), 8), vec.end());
+					int tmpId = nodes[x*Y_MAX + y].vecConnected[c];
+					nodes[tmpId].vecConnected.erase(remove(nodes[tmpId].vecConnected.begin(),
+						nodes[tmpId].vecConnected.end(), x*Y_MAX + y),
+						nodes[tmpId].vecConnected.end());
+				}
 			}
 		}
 	}

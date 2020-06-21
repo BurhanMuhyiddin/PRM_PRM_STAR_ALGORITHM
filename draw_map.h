@@ -18,6 +18,7 @@ void emptyMap();
 void drawMap();
 void visualizeNodes();
 void initMap();
+void visualizeConnections();
 
 struct sNode
 {
@@ -26,9 +27,10 @@ struct sNode
 	bool bStart = false;
 	bool bGoal = false;
 	bool bSampleNode = false;
+	bool bConnected = false;
 	int x;
 	int y;
-	std::vector <sNode*> vecNeighbours;
+	std::vector <int> vecConnected;
 	sNode* parent;
 };
 
