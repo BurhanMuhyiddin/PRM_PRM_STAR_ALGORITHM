@@ -109,8 +109,7 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 			}
 			else
 			{
-				//if (nodes[(int)startX*X_MAX + (int)startY].bObstacle == false)
-					nodes[(int)startX*X_MAX + (int)startY].bStart = false;
+				nodes[(int)startX*X_MAX + (int)startY].bStart = false;
 
 				startX = mapValue(mouseX, 0, W_W, 0, X_MAX);
 				startY = mapValue(mouseY, 0, W_H, 0, Y_MAX);
@@ -133,7 +132,6 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 			}
 			else
 			{
-				//if (map[(int)goalY][(int)goalX] != 1)
 				nodes[(int)goalX*X_MAX + (int)goalY].bGoal = false;
 
 				goalX = mapValue(mouseX, 0, W_W, 0, X_MAX);

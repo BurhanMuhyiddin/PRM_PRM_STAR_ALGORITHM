@@ -7,6 +7,7 @@
 #define NARROW_GATE			4
 #define LARGE_GATE			8
 #define CONCAVE_MARGIN		20
+#define O_MAP_SENSITIVITY	4
 
 #include <vector>
 
@@ -19,6 +20,7 @@ void drawMap();
 void visualizeNodes();
 void initMap();
 void visualizeConnections();
+void constructObstacleMap();
 
 struct sNode
 {

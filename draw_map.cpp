@@ -10,6 +10,7 @@
 using namespace std;
 
 sNode *nodes = nullptr;
+bool obstacleMap[Y_MAX*O_MAP_SENSITIVITY][X_MAX*O_MAP_SENSITIVITY];
 
 extern bool isDrawMap;
 
@@ -174,6 +175,24 @@ void loadConcave()
 	}
 
 	isDrawMap = true;
+}
+
+void constructObstacleMap()
+{
+	int nX = 0, nY = 0;
+	int cntX = 0, cntY = 0;
+	for (int x = 0; x < X_MAX * O_MAP_SENSITIVITY; x++)
+	{
+		nY = 0; cntY = 0;
+		for (int y = 0; y < Y_MAX * O_MAP_SENSITIVITY; y++)
+		{
+			obstacleMap[y][x] = nodes[nX * Y_MAX + nY].bObstacle;
+			cntY++;
+			nY = floor(cntY / O_MAP_SENSITIVITY);
+		}
+		cntX++;
+		nX = floor(cntX / O_MAP_SENSITIVITY);
+	}
 }
 
 void drawMap()

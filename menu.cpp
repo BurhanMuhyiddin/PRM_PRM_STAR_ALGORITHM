@@ -34,15 +34,19 @@ void menu_callback(int item)
 	{
 	case NONE:
 		loadMapNone();
+		constructObstacleMap();
 		break;
 	case SPARSE:
 		loadMapSparse();
+		constructObstacleMap();
 		break;
 	case NARROW_PASSAGE:
 		loadNarrowPassage();
+		constructObstacleMap();
 		break;
 	case CONCAVE:
 		loadConcave();
+		constructObstacleMap();
 		break;
 	case PRM:
 		is_prm = true;

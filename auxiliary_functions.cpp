@@ -3,10 +3,12 @@
 #include "window_parameters.h"
 #include "prm.h"
 #include "draw_map.h"
+#include <math.h>
 
 extern struct sNode *nodes;
+extern bool obstacleMap[Y_MAX*O_MAP_SENSITIVITY][X_MAX*O_MAP_SENSITIVITY];
 
-float mapValue(float val, float fromMin, float fromMax, float toMin, float toMax)
+double mapValue(double val, double fromMin, double fromMax, double toMin, double toMax)
 {
 	return (val - fromMin) * (toMax - toMin) / (fromMax - fromMin) * 1.0 + toMin;
 }
@@ -26,6 +28,15 @@ int* getCoordinatesOfNode(int nodeId)
 	return cords;
 }
 
+bool isAroundObstacle(int x, int y)
+{
+	if (nodes[x*Y_MAX + y - 1].bObstacle)	return false;
+	if (nodes[x*Y_MAX + y + 1].bObstacle)	return false;
+	if (nodes[(x-1)*Y_MAX + y].bObstacle)	return false;
+	if (nodes[(x+1)*Y_MAX + y].bObstacle)	return false;
+	return true;
+}
+
 void generateRandomNodes()
 {
 	unsigned int counter = 0;
@@ -38,49 +49,58 @@ void generateRandomNodes()
 		if (
 			nodes[nodeX*Y_MAX + nodeY].bObstacle == false &&
 			nodes[nodeX*Y_MAX + nodeY].bStart == false &&
-			nodes[nodeX*Y_MAX + nodeY].bGoal == false
+			nodes[nodeX*Y_MAX + nodeY].bGoal == false &&
+			isAroundObstacle(nodeX, nodeY)
 			)
+		{
 			nodes[nodeX*Y_MAX + nodeY].bSampleNode = true;
-
-		counter++;
+			counter++;
+		}
 	}
 }
 
 bool isPathFree(int sX, int sY, int gX, int gY)
 {
+	double tempX = sX * 1.0;
+	double tempY = sY * 1.0;
+
 	if (sX != gX)
 	{
-		double k = (gY - sY) * 1.0 / (gX - sX) * 1.0;
-		double b = sY * 1.0 - k * sX * 1.0;
+		double k = (1.0*gY - tempY) * 1.0 / (1.0*gX - tempX) * 1.0;
+		double b = tempY * 1.0 - k * tempX * 1.0;
 
-		while (sX != gX)
+		while ((int)tempX != gX)
 		{
-			if (gX > sX)
+			if (gX > (int)tempX)
 			{
-				sX++;
-				sY = (int)(k * sX*1.0 + b);
+				tempX += 0.1;
+				tempY = k * tempX*1.0 + b;
 			}
-			else if (gX < sX)
+			else if (gX < (int)tempX)
 			{
-				sX--;
-				sY = (int)(k * sX + b);
+				tempX -= 0.1;
+				tempY = k * tempX*1.0 + b;
 			}
-			if (nodes[sX*Y_MAX + sY].bObstacle)	return false;
+			int oX = (int)round(mapValue(tempX, 0, X_MAX, 0, X_MAX*O_MAP_SENSITIVITY));
+			int oY = (int)round(mapValue(tempY, 0, Y_MAX, 0, Y_MAX*O_MAP_SENSITIVITY));
+			if (obstacleMap[oY][oX])	return false;
 		}
 	}
-	if (sX == gX)
+	if ((int)tempX == gX)
 	{
-		while (sY != gY)
+		while ((int)tempY != gY)
 		{
-			if (gY > sY)
+			if (gY > (int)tempY)
 			{
-				sY++;
+				tempY += 0.1;
 			}
-			else if (gY < sY)
+			else if (gY < (int)tempY)
 			{
-				sY--;
+				tempY -= 0.1;
 			}
-			if (nodes[sX*Y_MAX + sY].bObstacle)	return false;
+			int oX = (int)round(mapValue(tempX, 0, X_MAX, 0, X_MAX*O_MAP_SENSITIVITY));
+			int oY = (int)round(mapValue(tempY, 0, Y_MAX, 0, Y_MAX*O_MAP_SENSITIVITY));
+			if (obstacleMap[oY][oX])	return false;
 		}
 	}
 

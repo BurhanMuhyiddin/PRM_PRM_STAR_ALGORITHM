@@ -1,4 +1,21 @@
 ﻿  auxiliary_functions.cpp
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(11): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(26): warning C4172: returning address of local variable or temporary: cords
+  draw_map.cpp
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(191): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(194): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(232): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\draw_map.cpp(262): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  main.cpp
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(39): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(104): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(105): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(114): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(115): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(127): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(128): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(137): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(138): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  prm.cpp
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\prm.cpp(110): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(28): warning C4172: returning address of local variable or temporary: cords
   prm_algorithm.vcxproj -> E:\MyFolder\C course\PRM_Algorithm\prm_algorithm\Debug\prm_algorithm.exe
