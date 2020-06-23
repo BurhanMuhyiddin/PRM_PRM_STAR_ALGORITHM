@@ -1,11 +1,11 @@
 ﻿  main.cpp
 e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(40): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(110): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(111): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(121): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(133): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(134): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(143): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(144): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(117): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(126): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(127): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(140): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(141): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(150): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(151): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   prm_algorithm.vcxproj -> E:\MyFolder\C course\PRM_Algorithm\prm_algorithm\Debug\prm_algorithm.exe

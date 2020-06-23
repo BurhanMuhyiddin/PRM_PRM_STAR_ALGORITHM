@@ -61,6 +61,17 @@ void generateRandomNodes()
 
 bool isPathFree(int sX, int sY, int gX, int gY)
 {
+	/*Theoretically it has to work without swapping values. However, in practice
+	in very few special cases the vertex can cross obstacle (because of sampling environment into grids). 
+	So, for any case I applied that.*/
+	if (gX < sX)
+	{
+		int temp = sX;
+		sX = gX;	gX = temp;
+		temp = sY;
+		sY = gY;	gY = temp;
+	}
+
 	double tempX = sX * 1.0;
 	double tempY = sY * 1.0;
 
@@ -74,11 +85,6 @@ bool isPathFree(int sX, int sY, int gX, int gY)
 			if (gX > (int)tempX)
 			{
 				tempX += 0.1;
-				tempY = k * tempX*1.0 + b;
-			}
-			else if (gX < (int)tempX)
-			{
-				tempX -= 0.1;
 				tempY = k * tempX*1.0 + b;
 			}
 			int oX = (int)round(mapValue(tempX, 0, X_MAX, 0, X_MAX*O_MAP_SENSITIVITY));

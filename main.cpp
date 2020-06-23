@@ -62,6 +62,8 @@ int main(int argc, char** argv)
 	glutMainLoop();
 }
 
+int counter = 0;
+
 void display_callback()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -103,6 +105,7 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 	{
 		if (is_set_init)
 		{
+			counter++;
 			is_set_init = false;
 			if (is_first_init_set)
 			{
@@ -126,6 +129,7 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 		}
 		else if (is_set_goal)
 		{
+			counter++;
 			is_set_goal = false;
 			if (is_first_goal_set)
 			{

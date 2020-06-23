@@ -49,9 +49,11 @@ void menu_callback(int item)
 		constructObstacleMap();
 		break;
 	case PRM:
+		is_prm_star = false;
 		is_prm = true;
 		break;
 	case PRM_STAR:
+		is_prm = false;
 		is_prm_star = true;
 		break;
 	}
