@@ -6,7 +6,7 @@
 #define NUMBER_OF_CLOSEST_NODES 10
 
 void initPrm();
-void findNClosestNodes(int nX, int nY);
+void findNClosestNodesPRM(int nX, int nY);
 void constructPrm();
 
 #endif // !PRM_INCLUDED_H

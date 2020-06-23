@@ -249,16 +249,6 @@ void visualizeNodes()
 
 void visualizeConnections()
 {
-	/*for (int xx = 0; xx < X_MAX; xx++)
-	{
-		for (int yy = 0; yy < Y_MAX; yy++)
-		{
-			if (nodes[xx*Y_MAX + yy].bSampleNode)
-			{
-				cout << nodes[xx*Y_MAX + yy].vecConnected.size() << endl;
-			}
-		}
-	}*/
 	glColor3f(1.0, 0.5, 0.7);
 	for (int x = 0; x < X_MAX; x++)
 	{

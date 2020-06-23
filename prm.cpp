@@ -15,7 +15,7 @@ void initPrm()
 	generateRandomNodes();
 }
 
-void findNClosestNodes(int nX, int nY)
+void findNClosestNodesPRM(int nX, int nY)
 {
 	int counter = NUMBER_OF_CLOSEST_NODES;
 	vector <int> tmp;
@@ -120,7 +120,7 @@ void constructPrm()
 		for (int y = 0; y < Y_MAX; y++)
 		{
 			if(nodes[x*Y_MAX + y].bSampleNode)
-				findNClosestNodes(nodes[x*Y_MAX + y].x, nodes[x*Y_MAX + y].y);
+				findNClosestNodesPRM(nodes[x*Y_MAX + y].x, nodes[x*Y_MAX + y].y);
 		}
 	}
 }

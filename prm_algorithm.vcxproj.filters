@@ -30,6 +30,9 @@
     <ClCompile Include="prm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="prm_star.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window_parameters.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="prm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prm_star.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

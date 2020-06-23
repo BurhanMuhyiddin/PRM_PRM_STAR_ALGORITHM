@@ -9,6 +9,7 @@
 #include "draw_map.h"
 #include "menu.h"
 #include "prm.h"
+#include "prm_star.h"
 
 using namespace std;
 
@@ -72,6 +73,11 @@ void display_callback()
 		if (!is_constructed && is_start_to_solve_prm)
 		{
 			constructPrm();
+			is_constructed = true;
+		}
+		else if (!is_constructed && is_start_to_solve_prm_star)
+		{
+			constructPrmStar();
 			is_constructed = true;
 		}
 		visualizeNodes();
@@ -166,6 +172,7 @@ void keyboard_callback(unsigned char key, int x, int y)
 		}
 		if (is_prm_star)
 		{
+			initPrmStar();
 			is_start_to_solve_prm_star = true;
 		}
 		break;
