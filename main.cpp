@@ -85,6 +85,16 @@ void display_callback()
 		visualizeNodes();
 		if(is_constructed)
 			visualizeConnections();
+		/*if (counter >= 2)
+		{
+			cout << isPathFree(nodes[(int)startX*Y_MAX + (int)startY].x, nodes[(int)startX*Y_MAX + (int)startY].y,
+				nodes[(int)goalX*Y_MAX + (int)goalY].x, nodes[(int)goalX*Y_MAX + (int)goalY].y) << endl;
+			glColor3f(1.0, 0.5, 0.7);
+			glBegin(GL_LINES);
+			glVertex2i((int)startX, (int)startY);
+			glVertex2i((int)goalX, (int)goalY);
+			glEnd();
+		}*/
 	}
 
 	glutSwapBuffers();
@@ -105,7 +115,7 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 	{
 		if (is_set_init)
 		{
-			counter++;
+			//counter++;
 			is_set_init = false;
 			if (is_first_init_set)
 			{
@@ -129,7 +139,7 @@ void mouse_callback(int button, int state, int mouseX, int mouseY)
 		}
 		else if (is_set_goal)
 		{
-			counter++;
+			//counter++;
 			is_set_goal = false;
 			if (is_first_goal_set)
 			{

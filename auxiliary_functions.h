@@ -10,4 +10,5 @@ bool isPathFree(int sX, int sY, int gX, int gY);
 int* getCoordinatesOfNode(int nodeId);
 bool isAroundObstacle(int x, int y);
 
+
 #endif // !AUXILIARY_FUNCTIONS_INCLUDED_H

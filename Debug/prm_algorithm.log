@@ -1,11 +1,6 @@
-﻿  main.cpp
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(40): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(117): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(126): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(127): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(140): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(141): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(150): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\main.cpp(151): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  auxiliary_functions.cpp
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(80): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(81): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(34): warning C4172: returning address of local variable or temporary: cords
+e:\myfolder\c course\prm_algorithm\prm_algorithm\prm_algorithm\auxiliary_functions.cpp(83): warning C4172: returning address of local variable or temporary: roundedPoints
   prm_algorithm.vcxproj -> E:\MyFolder\C course\PRM_Algorithm\prm_algorithm\Debug\prm_algorithm.exe

@@ -1,9 +1,15 @@
 #include <stdlib.h>
+#include <gl/glut.h>
+#include <gl/GLU.h>
+#include <gl/GL.h>
+#include <algorithm>
+#include <math.h>
 #include "auxiliary_functions.h"
 #include "window_parameters.h"
 #include "prm.h"
 #include "draw_map.h"
-#include <math.h>
+
+using namespace std;
 
 extern struct sNode *nodes;
 extern bool obstacleMap[Y_MAX*O_MAP_SENSITIVITY][X_MAX*O_MAP_SENSITIVITY];
@@ -30,11 +36,13 @@ int* getCoordinatesOfNode(int nodeId)
 
 bool isAroundObstacle(int x, int y)
 {
-	if (nodes[x*Y_MAX + y - 1].bObstacle)	return false;
-	if (nodes[x*Y_MAX + y + 1].bObstacle)	return false;
-	if (nodes[(x-1)*Y_MAX + y].bObstacle)	return false;
-	if (nodes[(x+1)*Y_MAX + y].bObstacle)	return false;
-	return true;
+	if (nodes[(x-1)*Y_MAX + y - 1].bObstacle)	return true;
+	//if (nodes[(x+1)*Y_MAX + y + 1].bObstacle)	return false;
+	//if (nodes[x*Y_MAX + y - 1].bObstacle)	return false;
+	//if (nodes[x*Y_MAX + y + 1].bObstacle)	return false;
+	//if (nodes[(x-1)*Y_MAX + y].bObstacle)	return false;
+	//if (nodes[(x+1)*Y_MAX + y].bObstacle)	return false;
+	return false;
 }
 
 void generateRandomNodes()
@@ -61,53 +69,36 @@ void generateRandomNodes()
 
 bool isPathFree(int sX, int sY, int gX, int gY)
 {
-	/*Theoretically it has to work without swapping values. However, in practice
-	in very few special cases the vertex can cross obstacle (because of sampling environment into grids). 
-	So, for any case I applied that.*/
-	if (gX < sX)
-	{
-		int temp = sX;
-		sX = gX;	gX = temp;
-		temp = sY;
-		sY = gY;	gY = temp;
-	}
 
-	double tempX = sX * 1.0;
-	double tempY = sY * 1.0;
+	int dx = gX - sX, dy = gY - sY;
+	int nx = abs(dx), ny = abs(dy);
+	int sign_x = dx > 0 ? 1 : -1, sign_y = dy > 0 ? 1 : -1;
 
-	if (sX != gX)
-	{
-		double k = (1.0*gY - tempY) * 1.0 / (1.0*gX - tempX) * 1.0;
-		double b = tempY * 1.0 - k * tempX * 1.0;
-
-		while ((int)tempX != gX)
-		{
-			if (gX > (int)tempX)
-			{
-				tempX += 0.1;
-				tempY = k * tempX*1.0 + b;
-			}
-			int oX = (int)round(mapValue(tempX, 0, X_MAX, 0, X_MAX*O_MAP_SENSITIVITY));
-			int oY = (int)round(mapValue(tempY, 0, Y_MAX, 0, Y_MAX*O_MAP_SENSITIVITY));
-			if (obstacleMap[oY][oX])	return false;
+	for (int ix = 0, iy = 0; ix < nx || iy < ny;) {
+		if ((1 + 2 * ix) * ny == (1 + 2 * iy) * nx) {
+			// next step is diagonal
+			sX += sign_x;
+			sY += sign_y;
+			ix++;
+			iy++;
 		}
-	}
-	if ((int)tempX == gX)
-	{
-		while ((int)tempY != gY)
-		{
-			if (gY > (int)tempY)
-			{
-				tempY += 0.1;
-			}
-			else if (gY < (int)tempY)
-			{
-				tempY -= 0.1;
-			}
-			int oX = (int)round(mapValue(tempX, 0, X_MAX, 0, X_MAX*O_MAP_SENSITIVITY));
-			int oY = (int)round(mapValue(tempY, 0, Y_MAX, 0, Y_MAX*O_MAP_SENSITIVITY));
-			if (obstacleMap[oY][oX])	return false;
+		else if ((1 + 2 * ix) * ny < (1 + 2 * iy) * nx) {
+			// next step is horizontal
+			sX += sign_x;
+			ix++;
 		}
+		else {
+			// next step is vertical
+			sY += sign_y;
+			iy++;
+		}
+		/*glPointSize(2.0);
+		glColor3f(0.0, 0.0, 1.0);
+		glBegin(GL_POINTS);
+		glVertex2f(sX, sY);
+		glEnd();
+		glutSwapBuffers();*/
+		if (nodes[sX * Y_MAX + sY].bObstacle || isAroundObstacle(sX, sY))	return false;
 	}
 
 	return true;

@@ -95,8 +95,8 @@ void constructPrmStar()
 		if (
 			nodes[nodeX*Y_MAX + nodeY].bObstacle == false &&
 			nodes[nodeX*Y_MAX + nodeY].bStart == false &&
-			nodes[nodeX*Y_MAX + nodeY].bGoal == false &&
-			isAroundObstacle(nodeX, nodeY)
+			nodes[nodeX*Y_MAX + nodeY].bGoal == false //&&
+			//isAroundObstacle(nodeX, nodeY)
 			)
 		{
 			// New point generated
